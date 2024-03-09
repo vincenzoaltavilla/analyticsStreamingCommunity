@@ -2,7 +2,7 @@ import bs4
 import requests
 
 
-def getUrlSC():
+def get_url_SC():
     URL_NEW_LINK = "https://tecnologiacasa.it/streamingcommunity-nuovo-indirizzo/"
     PREFIX_SC = "https://streamingcommunity."
 

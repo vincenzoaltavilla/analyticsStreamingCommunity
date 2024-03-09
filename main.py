@@ -1,5 +1,5 @@
-from getUrlSC import *
+from get_url_SC import *
 
-url = getUrlSC()
+url = get_url_SC()
 
 print(url)
