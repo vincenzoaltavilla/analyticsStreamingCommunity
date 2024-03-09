@@ -13,7 +13,7 @@ def get_url_SC():
     div_with_new_link = soup.find('div', class_='entry-content')
     every_link_in_div = div_with_new_link.find_all('a')
 
-    new_link = "Non trovato"
+    new_link = "Not found"
     for link in every_link_in_div:
         new_link = str(link.get('href'))
         if PREFIX_SC in new_link:
