@@ -10,7 +10,6 @@ chrome_driver = ChromeDriverManager().install()
 
 # What we are going to use to give orders to Chrome
 driver = Chrome(service=Service(chrome_driver))
-driver.maximize_window()
 
 # Open browser at URL
 url = asyncio.run((get_url_SC())) + 'browse/top10/'

@@ -1,14 +1,14 @@
 import configparser
-import json
+# import json
 import re
-from datetime import date, datetime
+# from datetime import date, datetime
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 from telethon.tl.functions.messages import (GetHistoryRequest)
 from telethon.tl.types import (PeerChannel)
 
-
 # some functions to parse json date
+'''
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
@@ -18,6 +18,7 @@ class DateTimeEncoder(json.JSONEncoder):
             return list(o)
 
         return json.JSONEncoder.default(self, o)
+'''
 
 
 async def get_url_SC():
@@ -60,7 +61,7 @@ async def get_url_SC():
     offset_id = 0
     limit = 100
     all_messages = []
-    total_messages = 0
+    # total_messages = 0
     total_count_limit = 0
 
     while True:
@@ -91,8 +92,8 @@ async def get_url_SC():
         if total_count_limit != 0 and total_messages >= total_count_limit:
             break
 
-    with open('channel_messages.json', 'w') as outfile:
-        json.dump(all_messages, outfile, cls=DateTimeEncoder)
+    # with open('channel_messages.json', 'w') as outfile:
+    #     json.dump(all_messages, outfile, cls=DateTimeEncoder)
 
     all_messages = str(all_messages)
     list_mex = all_messages.split()
