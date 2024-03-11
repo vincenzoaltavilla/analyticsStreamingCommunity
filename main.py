@@ -3,6 +3,7 @@ from selenium.webdriver import Chrome
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+import asyncio
 
 # Software which navigates with Chrome
 chrome_driver = ChromeDriverManager().install()
@@ -12,7 +13,7 @@ driver = Chrome(service=Service(chrome_driver))
 driver.maximize_window()
 
 # Open browser at URL
-url = get_url_SC() + 'browse/top10/'
+url = asyncio.run((get_url_SC())) + 'browse/top10/'
 driver.get(url)
 
 top10 = []
