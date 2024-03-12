@@ -21,7 +21,7 @@ class DateTimeEncoder(json.JSONEncoder):
 '''
 
 
-async def get_url_SC():
+async def get_url():
     # Reading Configs
     config = configparser.ConfigParser()
     config.read("config.ini")
