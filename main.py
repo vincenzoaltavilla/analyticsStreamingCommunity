@@ -6,11 +6,12 @@ import os
 
 today = str(date.today())
 
-# Specify Excel file name
+# Specify Excel file name and sheet name
 excel_file = 'top10.xlsx'
+sheet_name = 'TOP10'
 
 if os.path.exists(excel_file):
-    df = pd.read_excel(excel_file, sheet_name='TOP10', index_col=0)
+    df = pd.read_excel(excel_file, sheet_name=sheet_name, index_col=0)
     if today not in df.columns:
         top10 = get_top10()
         df[today] = top10
@@ -19,10 +20,12 @@ else:
     df = pd.DataFrame(top10, index=['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'], columns=[today])
 
 # Write DataFrame to Excel
-df.to_excel(excel_file, sheet_name="TOP10")
+df.to_excel(excel_file, sheet_name=sheet_name)
+
+print(len(df.columns))
 
 wb = load_workbook(excel_file)
-ws = wb["TOP10"]
+ws = wb[sheet_name]
 alphabet = 'BCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 for letter in alphabet:
