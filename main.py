@@ -5,41 +5,34 @@ from datetime import date
 import os
 
 today = str(date.today())
+# today = '2024-03-23'
 
-# Specify Excel file name and sheet name
 excel_file = 'top10.xlsx'
 sheet_name = 'TOP10'
 
+# If daily top10 was already stored, don't do anything, else append it or store it if the file doesn't exist
 if os.path.exists(excel_file):
     df = pd.read_excel(excel_file, sheet_name=sheet_name, index_col=0)
-    if today not in df.columns:
-        top10 = get_top10()
-        df[today] = top10
+    if today not in df.index:
+        df.loc[today] = get_top10()
 else:
-    top10 = get_top10()
-    df = pd.DataFrame(top10, index=['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'], columns=[today])
+    df = pd.DataFrame(index=[today], columns=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    df.loc[today] = get_top10()
 
 # Write DataFrame to Excel
 df.to_excel(excel_file, sheet_name=sheet_name)
 
-print(len(df.columns))
-
+# Define common column width
 wb = load_workbook(excel_file)
 ws = wb[sheet_name]
-alphabet = 'BCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-for letter in alphabet:
-    try:
-        length = len(ws[letter + '2'].value)
-    except:
-        break
-
-    max_width = 0
-
-    for row_number in range(1, ws.max_row + 1):
-        if len(ws[f'{letter}{row_number}'].value) > max_width:
-            max_width = len(ws[f'{letter}{row_number}'].value)
-
-    ws.column_dimensions[letter].width = max_width + 1
-
+columns = "ABCDEFGHIJK"
+for column in columns:
+    ws.column_dimensions[column].width = 20
 wb.save(excel_file)
+wb.close()
+
+# print(df.to_string(index=False))                                            # all dataframe
+# print(df.loc[['2024-03-23', '2024-03-12'], 3].to_string(index=False))       # n-th position in day(s) x
+# print(df[[1, 2]])                                                           # n-th position(s)
+# print(df.loc[['2024-03-12', '2024-03-23']].to_string())                     # full day X and/or Y (if just one day, with just one [] column print)
+# print(df[[3, 4]].loc[['2024-03-23', '2024-03-12']].to_string(index=False))  # n-th position(s) in day(s) x
