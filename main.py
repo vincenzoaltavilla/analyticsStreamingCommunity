@@ -1,26 +1,33 @@
 from get_top10 import *
-import pandas as pd
 from openpyxl import load_workbook
+import pandas as pd
+from datetime import date
+import os
 
-top10 = get_top10()
-
-df = pd.DataFrame(top10, index=['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'], columns=["Top10"])
+today = str(date.today())
 
 # Specify Excel file name
-excel_file = "top10.xlsx"
+excel_file = 'top10.xlsx'
+
+if os.path.exists(excel_file):
+    df = pd.read_excel(excel_file, sheet_name='TOP10', index_col=0)
+    if today not in df.columns:
+        top10 = get_top10()
+        df[today] = top10
+else:
+    top10 = get_top10()
+    df = pd.DataFrame(top10, index=['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'], columns=[today])
 
 # Write DataFrame to Excel
 df.to_excel(excel_file, sheet_name="TOP10")
 
 wb = load_workbook(excel_file)
 ws = wb["TOP10"]
-
 alphabet = 'BCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 for letter in alphabet:
-
     try:
-        length = len(ws[letter + '1'].value)
+        length = len(ws[letter + '2'].value)
     except:
         break
 
