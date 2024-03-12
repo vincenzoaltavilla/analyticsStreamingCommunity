@@ -1,15 +1,17 @@
 from get_url_SC import *
-from selenium.webdriver import Chrome
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium import webdriver
 import asyncio
 
 # Software which navigates with Chrome
 chrome_driver = ChromeDriverManager().install()
+op = webdriver.ChromeOptions()
+op.add_argument('headless')
 
 # What we are going to use to give orders to Chrome
-driver = Chrome(service=Service(chrome_driver))
+driver = webdriver.Chrome(options=op, service=Service(chrome_driver))
 
 # Open browser at URL
 url = asyncio.run((get_url_SC())) + 'browse/top10/'
